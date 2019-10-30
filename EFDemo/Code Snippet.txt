@@ -1,0 +1,30 @@
+Console:
+
+Scaffold-DbContext "<<connection string>>" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+Startup.cs:
+
+using <<application>>.Models;?
+
+using Microsoft.EntityFrameworkCore;?
+
+var connection = @"<<connection string>>";
+
+services.AddDbContext<xxxxContext>(options => options.UseSqlServer(connection));
+
+using Microsoft.AspNetCore.Mvc;
+
+services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+app.UseMvc(routes =>
+{
+   routes.MapRoute(
+   name: "default",
+   template: "{controller=Home}/{action=Index}/{id?}");
+});
+
+_ViewImports.cshtml:
+
+@using Microsoft.AspNetCore.Identity
+@using <<application>>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
